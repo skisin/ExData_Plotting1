@@ -1,0 +1,4 @@
+##TASK 2
+plot(sub_set_f$timestamp,sub_set_f$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+dev.copy(png, file="plot2.png", width=480, height=480)
+dev.off()

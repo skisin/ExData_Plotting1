@@ -1,0 +1,22 @@
+## Getting a file and prep a subset of data
+
+https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip
+
+
+fileURL <- "http://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+dFile <- "exdata_data_household_power_consumption.zip"
+
+download.file(fileURL,destfile = dFile)
+
+ep_cons_file <- unzip(dFile)
+
+ep_cons_whole <- read.table(ep_cons_file, header=T, sep=";")
+ep_cons_whole$Date <- as.Date(ep_cons_whole$Date, format="%d/%m/%Y")
+sub_set_f <- ep_cons_whole[(ep_cons_whole$Date=="2007-02-01") | (ep_cons_whole$Date=="2007-02-02"),]
+sub_set_f$Global_active_power <- as.numeric(as.character(sub_set_f$Global_active_power))
+sub_set_f$Global_reactive_power <- as.numeric(as.character(sub_set_f$Global_reactive_power))
+sub_set_f$Voltage <- as.numeric(as.character(sub_set_f$Voltage))
+sub_set_f$Sub_metering_1 <- as.numeric(as.character(sub_set_f$Sub_metering_1))
+sub_set_f$Sub_metering_2 <- as.numeric(as.character(sub_set_f$Sub_metering_2))
+sub_set_f$Sub_metering_3 <- as.numeric(as.character(sub_set_f$Sub_metering_3))
+sub_set_f <- transform(sub_set_f, timestamp=as.POSIXct(paste(Date, Time)), "%d/%m/%Y %H:%M:%S")
